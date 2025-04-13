@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import QuoteBox from './components/QuoteBox';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 type Quote = {
   content: string;
@@ -47,6 +48,28 @@ const App = () => {
         ) : (
           quote && <QuoteBox quote={quote} onNext={fetchQuote} />
         )}
+
+        {/* Flex container for buttons */}
+        <div className="flex gap-4 mt-6 justify-center">
+          {/* Copy Button */}
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(`"${quote?.content}" - ${quote?.author}`);
+              toast.success("Quote copied to clipboard!");
+            }}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg text-lg transition duration-300"
+          >
+            Copy 📋
+          </button>
+
+          {/* Next Button (If you want to include a Next button, use below button) */}
+          <button
+            onClick={fetchQuote}
+            className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg text-lg transition duration-300"
+          >
+            Next 🔄
+          </button>
+        </div>
       </div>
     </div>
   );
